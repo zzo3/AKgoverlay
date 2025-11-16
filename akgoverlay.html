@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat Overlay</title>
+
+  <!-- ui css -->
+  <link rel="stylesheet" href="./akgoverlay.ui.css">
+
+  <!-- synchronous load of local config if present -->
+  <script>
+    (function loadLocalConfigSync(){
+      try {
+        var s = document.createElement('script');
+        s.src = './akgoverlay.local.js';
+        s.async = false;
+        s.defer = false;
+        s.onload = function(){ console.debug('akgoverlay.local.js loaded'); };
+        s.onerror = function(){ console.debug('no local config found'); };
+        document.head.appendChild(s);
+      } catch(e){
+        console.debug('loadLocalConfigSync error', e);
+      }
+    })();
+  </script>
+</head>
+<body>
+  <div id="chat-container"></div>
+
+  <!-- core logic -->
+  <script src="./akgoverlay.core.js"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+
+:root{
+  --per-message-ms: 30000;
+  --global-idle-ms: 60000;
+  --fade-duration-ms: 600;
+  --container-toppad: 28px;
+  --container-gap: 12px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Noto Sans TC', 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+  background: transparent;
+  color: #fff;
+}
+
+/* chat container */
+#chat-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--container-toppad) 15px 15px 15px;
+  max-width: 400px;
+  margin: 0 auto;
+  max-height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  pointer-events: none;
+  gap: var(--container-gap);
+  box-sizing: border-box;
+}
+#chat-container::-webkit-scrollbar { width: 0px; height: 0px; background: transparent; }
+#chat-container::-webkit-scrollbar-thumb { background: transparent; }
+#chat-container::-webkit-scrollbar-track { background: transparent; }
+#chat-container { scrollbar-color: transparent transparent; }
+
+.message-container * {
+  pointer-events: auto;
+}
+
+.message-container {
+  position: relative;
+  margin-bottom: 20px;
+  will-change: transform, opacity;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.message-container.fadeout .message {
+  animation: fadeOutUp calc(var(--fade-duration-ms) * 1ms) ease-in forwards;
+}
+
+.message-container.global-fade .message {
+  animation: fadeOutUp calc(var(--fade-duration-ms) * 1ms) ease-in forwards;
+}
+
+.message-container.fadeout:hover {
+  transform: translateY(0) scale(1.03);
+  opacity: 1;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOutUp {
+  0%   { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-30px); }
+}
+
+@keyframes flamePulseBlue {
+  0%   { box-shadow: 0 0 4px #00f, 0 0 8px #0ff, 0 0 12px #0ff; }
+  50%  { box-shadow: 0 0 6px #33f, 0 0 10px #3ff, 0 0 14px #3ff; }
+  100% { box-shadow: 0 0 4px #00f, 0 0 8px #0ff, 0 0 12px #0ff; }
+}
+
+@keyframes scaleUpPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.08); }
+}
+
+/* visual */
+.message {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  padding: 5px;
+  border-radius: 10px;
+  color: #fff;
+  word-wrap: break-word;
+  font-size: 0.75em;
+  text-shadow: 1px 1px 2px #000, 0 0 6px rgba(255,255,255,0.8);
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.message.fireblue {
+  background: rgba(0, 100, 255, 0.08);
+  animation: flamePulseBlue 3.0s infinite ease-in-out;
+}
+
+.message.fireblue.boldpulse {
+  font-weight: bold;
+  animation:
+    flamePulseBlue 2.0s infinite ease-in-out,
+    scaleUpPulse 2.5s infinite ease-in-out;
+}
+
+.message.bot {
+  background: rgba(200, 200, 200, 0.05);
+  border: 1px solid #888;
+  color: #ccc;
+  font-style: italic;
+  box-shadow: none;
+  animation: none;
+}
+
+.username-box {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 1px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: 600;
+  z-index: 2;
+  background: transparent;
+  font-size: 0.85em;
+  text-shadow: 1px 1px 2px #000;
+  opacity: 0.9;
+  border: 1px solid #fff;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.username-box.youtube {
+  color: #FF0000;
+  border: 2px solid #FF0000;
+  box-shadow: 0 0 6px #FF0000;
+}
+.username-box.twitch {
+  color: #9146FF;
+  border: 2px solid #9146FF;
+  box-shadow: 0 0 6px #9146FF;
+}
+.username-box.kick {
+  color: #53fc18;
+  border: 2px solid #53fc18;
+  box-shadow: 0 0 6px #53fc18;
+}
+.username-box.system {
+  color: #ccc;
+  border: 1px solid #888;
+  box-shadow: none;
+  font-style: italic;
+}
+
+.text {
+  line-height: 1.4;
+  word-break: break-word;
+}
