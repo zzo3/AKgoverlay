@@ -1,9 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <style>
+    html, body {
+      background: transparent !important;
+      background-color: rgba(0, 0, 0, 0) !important;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
   <script>
-    window.location.href = "akgoverlay.html" + window.location.search;
+    // 取得當前所有 URL 參數並轉接
+    const currentParams = window.location.search;
+    // 如果網址裡沒有 chroma 參數，自動補上透明色碼
+    const hasChroma = currentParams.includes('chroma=');
+    const extraParam = hasChroma ? '' : (currentParams ? '&chroma=0006' : '?chroma=0006');
+    
+    window.location.replace("akgoverlay.html" + currentParams + extraParam);
   </script>
 </head>
-<body></body>
+<body style="background: transparent !important;">
+</body>
 </html>
